@@ -27,7 +27,7 @@ contract KycSmartContract {
 
     bytes32[] orgNamesList;
     constructor(bytes32[] oNames) public {
-    
+
       for(uint i=0;i<oNames.length;i++){
           addOrganization(bytes32ToString(oNames[i]),msg.sender);
       }
@@ -35,7 +35,14 @@ contract KycSmartContract {
     function getOrganizationName(uint index) view returns (string){
       return allOrgs[index].oname;
     }
-    function helloWorld() view returns(bool){
+    function getOrganizationCount() view returns (uint) {
+      return allOrgs.length;
+    }
+    function getOrganizationData(uint index) view returns (string,address) {
+        return (allOrgs[index].oname,allOrgs[index].oAddress);
+    }
+    
+    function checkDeployed() view returns(bool){
     return true;
     }
     function bytes32ToString(bytes32 x) public returns (string memory) {
@@ -122,16 +129,16 @@ contract KycSmartContract {
     }
 
 
-    function addCustomer(string memory Uname, string memory DataHash) public payable returns(uint) {
-       for(uint i = 0;i < allCustomers.length; ++ i) {
-            if(stringsEqual(allCustomers[i].uname, Uname))
-                return 2;
-        }
+    function addCustomer(string memory Uname, string  DataHash,address oAddress) public payable returns(uint) {
         allCustomers.length ++;
-        if(allCustomers.length < 1)
-            return 1;
-        allCustomers[allCustomers.length-1] = Customer(Uname, DataHash, msg.sender);
+        allCustomers[allCustomers.length-1] = Customer(Uname, DataHash, oAddress);
         return 0;
+    }
+    function getCustomersCount() view returns (uint){
+        return allCustomers.length;
+    }
+    function getCustomerData(uint index) view returns (string,string,address){
+        return (allCustomers[index].uname,allCustomers[index].dataHash,allCustomers[index].oAddress);
     }
 
 }

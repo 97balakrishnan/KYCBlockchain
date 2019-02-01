@@ -13,3 +13,11 @@ deployedContract = KycSmartContract.new(['IndianBank','Airtel','Jio','TataSky','
 
 console.log("contract address : "+deployedContract.address);
 
+web3.eth.blockNumber // return current block number
+web3.eth.getBlock(blockHashOrBlockNumber [, returnTransactionObjects] [, callback]) // returns a block given the hash or number
+
+//combine both
+currentBlock = web3.eth.blockNumber;
+web3.eth.getBlock(currentBlock, function(block){
+    //do whatever with the block details
+});
