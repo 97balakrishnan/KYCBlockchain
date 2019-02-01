@@ -6,158 +6,14 @@
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/web3@0.20.4/dist/web3.js"></script>
+	<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script>
+	<script src="./index.js"></script>
 </head>
 <body>
 	<div class="valid-chain replace-chain">
 		<h1 style="text-align: center; font-size: 40pt; margin-bottom: 33px; letter-spacing: 3px; position: relative; z-index: 999;">KYC CUSTOMERS BLOCKCHAIN</h1><div class="blockchain-step immutability fifty-attack">
-			<div id="box">
-				<div class="ant-card genesis block block-shadow ant-card-bordered">
-					<div class="ant-card-body">
-						<div>
-							<span class="ant-input-group-wrapper" style="margin-bottom: 20px;">
-								<span class="ant-input-wrapper ant-input-group">
-									<span class="ant-input-group-addon">
-										<span style="margin-right: 7px; margin-left: 7px;">Name</span>
-									</span>
-									<span class="genesis-data genesis-mutate genesis-mutate-2 ant-input-affix-wrapper">
-										<span class="ant-input-prefix"><i class="anticon anticon-file-text"></i></span>
-										<input type="text" class="ant-input">
-									</span>
-								</span>
-							</span>
-							<div class="genesis-previous-hash" style="margin-bottom: 7px; display: flex; justify-content: flex-start; flex-wrap: nowrap; max-width: 100%; overflow: auto;">
-								<div style="white-space: nowrap;">PREVIOUS HASH</div>
-								<div data-show="true" class="ant-tag ant-tag-green" style="font-size: 8pt; float: right; font-family: &quot;Courier New&quot;; cursor: default; display: block; background: none; border-color: transparent;">
-									<span class="ant-tag-text">0</span>
-								</div>
-							</div>
-							<div class="genesis-hash genesis-hash-2 genesis-hash-3" style="display: flex; justify-content: flex-start; flex-wrap: nowrap; max-width: 100%; overflow: auto;">
-								<div style="margin-right: 15px;">HASH</div>
-								<div data-show="true" class="ant-tag ant-tag-green" style="display: block; font-size: 9pt; font-family: &quot;Courier New&quot;; cursor: default; max-width: 100%; overflow: auto;">
-									<span class="ant-tag-text">000dc75a315c77a1f9c98fb6247d03dd18ac52632d7dc6a9920261d8109b37cf</span>
-								</div>
-							</div>
-							<div style="margin-top: 27px; display: flex; justify-content: space-between; align-items: center; flex-wrap: nowrap; text-overflow: ellipsis;">
-								<div style="font-size: 24px; white-space: nowrap; overflow: auto;">
-									<span class="genesis-index" style="letter-spacing: 1px;">GENESIS BLOCK</span>
-									<span class="genesis-timestamp"> <span style="font-weight: 300; font-size: 8pt;">on <span id="currDateSpan"></span></span>
-								</div>
-
-								<div data-show="true" class="ant-tag genesis-mine genesis-nonce" style="cursor: default;">
-									<span class="ant-tag-text" href="#collapsedDiv" data-toggle="collapse">More</span>		
-								</div>
-							</div>
-
-							<div id="collapsedDiv" class="collapse">
-								<div>
-									<span class="ant-input-group-wrapper" style="margin-bottom: 20px;">
-										<span class="ant-input-wrapper ant-input-group">
-											<span class="ant-input-group-addon">
-												<span style="margin-right: 7px; margin-left: 7px;">Gender</span>
-											</span>
-											<span class="genesis-data genesis-mutate genesis-mutate-2 ant-input-affix-wrapper">
-												<span class="ant-input-prefix"><i class="anticon anticon-file-text"></i></span>
-												<input type="text" class="ant-input">
-											</span>
-										</span>
-									</span>
-								</div>
-								<div>
-									<span class="ant-input-group-wrapper" style="margin-bottom: 20px;">
-										<span class="ant-input-wrapper ant-input-group">
-											<span class="ant-input-group-addon">
-												<span style="margin-right: 7px; margin-left: 7px;">Date Of Birth </span>
-											</span>
-											<span class="genesis-data genesis-mutate genesis-mutate-2 ant-input-affix-wrapper">
-												<span class="ant-input-prefix"><i class="anticon anticon-file-text"></i></span>
-												<input type="text" class="ant-input"> 
-											</span>
-										</span>
-									</span>
-								</div>
-								<div>
-									<span class="ant-input-group-wrapper" style="margin-bottom: 20px;">
-										<span class="ant-input-wrapper ant-input-group">
-											<span class="ant-input-group-addon">
-												<span style="margin-right: 7px; margin-left: 7px;">Marital Status </span>
-											</span>
-											<span class="genesis-data genesis-mutate genesis-mutate-2 ant-input-affix-wrapper">
-												<span class="ant-input-prefix"><i class="anticon anticon-file-text"></i></span>
-												<input type="text" class="ant-input"> 
-											</span>
-										</span>
-									</span>
-								</div>
-								<div>
-									<span class="ant-input-group-wrapper" style="margin-bottom: 20px;">
-										<span class="ant-input-wrapper ant-input-group">
-											<span class="ant-input-group-addon">
-												<span style="margin-right: 7px; margin-left: 7px;">Aadhar Number </span>
-											</span>
-											<span class="genesis-data genesis-mutate genesis-mutate-2 ant-input-affix-wrapper">
-												<span class="ant-input-prefix"><i class="anticon anticon-file-text"></i></span>
-												<input type="text" class="ant-input">
-											</span>
-										</span>
-									</span>
-								</div>
-								<div>
-									<span class="ant-input-group-wrapper" style="margin-bottom: 20px;">
-										<span class="ant-input-wrapper ant-input-group">
-											<span class="ant-input-group-addon">
-												<span style="margin-right: 7px; margin-left: 7px;">Driving Licence Number </span>
-											</span>
-											<span class="genesis-data genesis-mutate genesis-mutate-2 ant-input-affix-wrapper">
-												<span class="ant-input-prefix"><i class="anticon anticon-file-text"></i></span>
-												<input type="text" class="ant-input"> 
-											</span>
-										</span>
-									</span>
-								</div>
-								<div>
-									<span class="ant-input-group-wrapper" style="margin-bottom: 20px;">
-										<span class="ant-input-wrapper ant-input-group">
-											<span class="ant-input-group-addon">
-												<span style="margin-right: 7px; margin-left: 7px;">PAN</span>
-											</span>
-											<span class="genesis-data genesis-mutate genesis-mutate-2 ant-input-affix-wrapper">
-												<span class="ant-input-prefix"><i class="anticon anticon-file-text"></i></span>
-												<input type="text" class="ant-input">   
-											</span>
-										</span>
-									</span>
-								</div>
-								<div>
-									<span class="ant-input-group-wrapper" style="margin-bottom: 20px;">
-										<span class="ant-input-wrapper ant-input-group">
-											<span class="ant-input-group-addon">
-												<span style="margin-right: 7px; margin-left: 7px;">E-mail ID</span>
-											</span>
-											<span class="genesis-data genesis-mutate genesis-mutate-2 ant-input-affix-wrapper">
-												<span class="ant-input-prefix"><i class="anticon anticon-file-text"></i></span>
-												<input type="text" class="ant-input">
-											</span>
-										</span>
-									</span>
-								</div>
-								<div>
-									<span class="ant-input-group-wrapper" style="margin-bottom: 20px;">
-										<span class="ant-input-wrapper ant-input-group">
-											<span class="ant-input-group-addon">
-												<span style="margin-right: 7px; margin-left: 7px;">Mobile Number</span>
-											</span>
-											<span class="genesis-data genesis-mutate genesis-mutate-2 ant-input-affix-wrapper">
-												<span class="ant-input-prefix"><i class="anticon anticon-file-text"></i></span>
-												<input type="text" class="ant-input">
-											</span>
-										</span>
-									</span>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
+			<div id="box"></div>
 		</div>
 	</div>
 
@@ -193,7 +49,7 @@
 	$(".press").click(function () {
 		var count = $('#box > div').children().length;
 		var date = new Date();
-		$("#box").append('<i class="anticon anticon-down" style="display: block; font-size: 24pt; margin-bottom: 27px;"></i><div class="ant-card genesis block block-shadow ant-card-bordered"> <div class="ant-card-body"> <div> <span class="ant-input-group-wrapper" style="margin-bottom: 20px;"> <span class="ant-input-wrapper ant-input-group"> <span class="ant-input-group-addon"> <span style="margin-right: 7px; margin-left: 7px;">NAME</span> </span> <span class="genesis-data genesis-mutate genesis-mutate-2 ant-input-affix-wrapper"> <span class="ant-input-prefix"><i class="anticon anticon-file-text"></i></span> <input type="text" class="ant-input"> </span> </span> </span> <div class="genesis-previous-hash" style="margin-bottom: 7px; display: flex; justify-content: flex-start; flex-wrap: nowrap; max-width: 100%; overflow: auto;"> <div style="white-space: nowrap;">PREVIOUS HASH</div> <div data-show="true" class="ant-tag ant-tag-green" style="font-size: 8pt; float: right; font-family: &quot;Courier New&quot;; cursor: default; display: block; background: none; border-color: transparent;"> <span class="ant-tag-text">0</span> </div> </div> <div class="genesis-hash genesis-hash-2 genesis-hash-3" style="display: flex; justify-content: flex-start; flex-wrap: nowrap; max-width: 100%; overflow: auto;"> <div style="margin-right: 15px;">HASH</div> <div data-show="true" class="ant-tag ant-tag-green" style="display: block; font-size: 9pt; font-family: &quot;Courier New&quot;; cursor: default; max-width: 100%; overflow: auto;"> <span class="ant-tag-text">000dc75a315c77a1f9c98fb6247d03dd18ac52632d7dc6a9920261d8109b37cf</span> </div> </div> <div style="margin-top: 27px; display: flex; justify-content: space-between; align-items: center; flex-wrap: nowrap; text-overflow: ellipsis;"> <div style="font-size: 24px; white-space: nowrap; overflow: auto;"> <span class="genesis-index" style="letter-spacing: 1px;">BLOCK #' + count + '</span> <span class="genesis-timestamp"> <span style="font-weight: 300; font-size: 8pt;">on '+ date + '</span> </span> </div><div data-show="true" class="ant-tag genesis-mine genesis-nonce" style="cursor: default;"> <span class="ant-tag-text" href="#collapsedDiv' + count + '" data-toggle="collapse">More</span> </div> </div><div id="collapsedDiv' + count + '" class="collapse"> <div> <span class="ant-input-group-wrapper" style="margin-bottom: 20px;"> <span class="ant-input-wrapper ant-input-group"> <span class="ant-input-group-addon"> <span style="margin-right: 7px; margin-left: 7px;">Gender</span> </span> <span class="genesis-data genesis-mutate genesis-mutate-2 ant-input-affix-wrapper"> <span class="ant-input-prefix"><i class="anticon anticon-file-text"></i></span> <input type="text" class="ant-input"> </span> </span> </span> </div> <div> <span class="ant-input-group-wrapper" style="margin-bottom: 20px;"> <span class="ant-input-wrapper ant-input-group"> <span class="ant-input-group-addon"> <span style="margin-right: 7px; margin-left: 7px;">Date Of Birth </span> </span> <span class="genesis-data genesis-mutate genesis-mutate-2 ant-input-affix-wrapper"> <span class="ant-input-prefix"><i class="anticon anticon-file-text"></i></span> <input type="text" class="ant-input"> </span> </span> </span> </div> <div> <span class="ant-input-group-wrapper" style="margin-bottom: 20px;"> <span class="ant-input-wrapper ant-input-group"> <span class="ant-input-group-addon"> <span style="margin-right: 7px; margin-left: 7px;">Marital Status </span> </span> <span class="genesis-data genesis-mutate genesis-mutate-2 ant-input-affix-wrapper"> <span class="ant-input-prefix"><i class="anticon anticon-file-text"></i></span> <input type="text" class="ant-input"> </span> </span> </span> </div> <div> <span class="ant-input-group-wrapper" style="margin-bottom: 20px;"> <span class="ant-input-wrapper ant-input-group"> <span class="ant-input-group-addon"> <span style="margin-right: 7px; margin-left: 7px;">Aadhar Number </span> </span> <span class="genesis-data genesis-mutate genesis-mutate-2 ant-input-affix-wrapper"> <span class="ant-input-prefix"><i class="anticon anticon-file-text"></i></span> <input type="text" class="ant-input"> </span> </span> </span> </div> <div> <span class="ant-input-group-wrapper" style="margin-bottom: 20px;"> <span class="ant-input-wrapper ant-input-group"> <span class="ant-input-group-addon"> <span style="margin-right: 7px; margin-left: 7px;">Driving Licence Number </span> </span> <span class="genesis-data genesis-mutate genesis-mutate-2 ant-input-affix-wrapper"> <span class="ant-input-prefix"><i class="anticon anticon-file-text"></i></span> <input type="text" class="ant-input"> </span> </span> </span> </div> <div> <span class="ant-input-group-wrapper" style="margin-bottom: 20px;"> <span class="ant-input-wrapper ant-input-group"> <span class="ant-input-group-addon"> <span style="margin-right: 7px; margin-left: 7px;">PAN</span> </span> <span class="genesis-data genesis-mutate genesis-mutate-2 ant-input-affix-wrapper"> <span class="ant-input-prefix"><i class="anticon anticon-file-text"></i></span> <input type="text" class="ant-input"> </span> </span> </span> </div> <div> <span class="ant-input-group-wrapper" style="margin-bottom: 20px;"> <span class="ant-input-wrapper ant-input-group"> <span class="ant-input-group-addon"> <span style="margin-right: 7px; margin-left: 7px;">E-mail ID</span> </span> <span class="genesis-data genesis-mutate genesis-mutate-2 ant-input-affix-wrapper"> <span class="ant-input-prefix"><i class="anticon anticon-file-text"></i></span> <input type="text" class="ant-input"> </span> </span> </span> </div> <div> <span class="ant-input-group-wrapper" style="margin-bottom: 20px;"> <span class="ant-input-wrapper ant-input-group"> <span class="ant-input-group-addon"> <span style="margin-right: 7px; margin-left: 7px;">Mobile Number</span> </span> <span class="genesis-data genesis-mutate genesis-mutate-2 ant-input-affix-wrapper"> <span class="ant-input-prefix"><i class="anticon anticon-file-text"></i></span> <input type="text" class="ant-input"> </span> </span> </span> </div> </div> </div> </div> </div> </div> </div> </div> ');
+		$("#box").append('<i class="anticon anticon-down" style="display: block; font-size: 24pt; margin-bottom: 27px;"></i><div class="ant-card genesis block block-shadow ant-card-bordered"> <div class="ant-card-body"> <div> <span class="ant-input-group-wrapper" style="margin-bottom: 20px;"> <span class="ant-input-wrapper ant-input-group"> <span class="ant-input-group-addon"> <span style="margin-right: 7px; margin-left: 7px;">NAME</span> </span> <span class="genesis-data genesis-mutate genesis-mutate-2 ant-input-affix-wrapper"> <span class="ant-input-prefix"><i class="anticon anticon-file-text"></i></span> <span class="ant-input"> </span> </span> </span> <div class="genesis-previous-hash" style="margin-bottom: 7px; display: flex; justify-content: flex-start; flex-wrap: nowrap; max-width: 100%; overflow: auto;"> <div style="white-space: nowrap;">PREVIOUS HASH</div> <div data-show="true" class="ant-tag ant-tag-green" style="font-size: 8pt; float: right; font-family: &quot;Courier New&quot;; cursor: default; display: block; background: none; border-color: transparent;"> <span class="ant-tag-text">0</span> </div> </div> <div class="genesis-hash genesis-hash-2 genesis-hash-3" style="display: flex; justify-content: flex-start; flex-wrap: nowrap; max-width: 100%; overflow: auto;"> <div style="margin-right: 15px;">HASH</div> <div data-show="true" class="ant-tag ant-tag-green" style="display: block; font-size: 9pt; font-family: &quot;Courier New&quot;; cursor: default; max-width: 100%; overflow: auto;"> <span class="ant-tag-text">000dc75a315c77a1f9c98fb6247d03dd18ac52632d7dc6a9920261d8109b37cf</span> </div> </div> <div style="margin-top: 27px; display: flex; justify-content: space-between; align-items: center; flex-wrap: nowrap; text-overflow: ellipsis;"> <div style="font-size: 24px; white-space: nowrap; overflow: auto;"> <span class="genesis-index" style="letter-spacing: 1px;">BLOCK #' + count + '</span> <span class="genesis-timestamp"> <span style="font-weight: 300; font-size: 8pt;">on '+ date + '</span> </span> </div><div data-show="true" class="ant-tag genesis-mine genesis-nonce" style="cursor: default;"> <span class="ant-tag-text" href="#collapsedDiv' + count + '" data-toggle="collapse">More</span> </div> </div><div id="collapsedDiv' + count + '" class="collapse"> <div> <span class="ant-input-group-wrapper" style="margin-bottom: 20px;"> <span class="ant-input-wrapper ant-input-group"> <span class="ant-input-group-addon"> <span style="margin-right: 7px; margin-left: 7px;">Gender</span> </span> <span class="genesis-data genesis-mutate genesis-mutate-2 ant-input-affix-wrapper"> <span class="ant-input-prefix"><i class="anticon anticon-file-text"></i></span> <input type="text" class="ant-input"> </span> </span> </span> </div> <div> <span class="ant-input-group-wrapper" style="margin-bottom: 20px;"> <span class="ant-input-wrapper ant-input-group"> <span class="ant-input-group-addon"> <span style="margin-right: 7px; margin-left: 7px;">Date Of Birth </span> </span> <span class="genesis-data genesis-mutate genesis-mutate-2 ant-input-affix-wrapper"> <span class="ant-input-prefix"><i class="anticon anticon-file-text"></i></span> <input type="text" class="ant-input"> </span> </span> </span> </div> <div> <span class="ant-input-group-wrapper" style="margin-bottom: 20px;"> <span class="ant-input-wrapper ant-input-group"> <span class="ant-input-group-addon"> <span style="margin-right: 7px; margin-left: 7px;">Marital Status </span> </span> <span class="genesis-data genesis-mutate genesis-mutate-2 ant-input-affix-wrapper"> <span class="ant-input-prefix"><i class="anticon anticon-file-text"></i></span> <input type="text" class="ant-input"> </span> </span> </span> </div> <div> <span class="ant-input-group-wrapper" style="margin-bottom: 20px;"> <span class="ant-input-wrapper ant-input-group"> <span class="ant-input-group-addon"> <span style="margin-right: 7px; margin-left: 7px;">Aadhar Number </span> </span> <span class="genesis-data genesis-mutate genesis-mutate-2 ant-input-affix-wrapper"> <span class="ant-input-prefix"><i class="anticon anticon-file-text"></i></span> <input type="text" class="ant-input"> </span> </span> </span> </div> <div> <span class="ant-input-group-wrapper" style="margin-bottom: 20px;"> <span class="ant-input-wrapper ant-input-group"> <span class="ant-input-group-addon"> <span style="margin-right: 7px; margin-left: 7px;">Driving Licence Number </span> </span> <span class="genesis-data genesis-mutate genesis-mutate-2 ant-input-affix-wrapper"> <span class="ant-input-prefix"><i class="anticon anticon-file-text"></i></span> <input type="text" class="ant-input"> </span> </span> </span> </div> <div> <span class="ant-input-group-wrapper" style="margin-bottom: 20px;"> <span class="ant-input-wrapper ant-input-group"> <span class="ant-input-group-addon"> <span style="margin-right: 7px; margin-left: 7px;">PAN</span> </span> <span class="genesis-data genesis-mutate genesis-mutate-2 ant-input-affix-wrapper"> <span class="ant-input-prefix"><i class="anticon anticon-file-text"></i></span> <input type="text" class="ant-input"> </span> </span> </span> </div> <div> <span class="ant-input-group-wrapper" style="margin-bottom: 20px;"> <span class="ant-input-wrapper ant-input-group"> <span class="ant-input-group-addon"> <span style="margin-right: 7px; margin-left: 7px;">E-mail ID</span> </span> <span class="genesis-data genesis-mutate genesis-mutate-2 ant-input-affix-wrapper"> <span class="ant-input-prefix"><i class="anticon anticon-file-text"></i></span> <input type="text" class="ant-input"> </span> </span> </span> </div> <div> <span class="ant-input-group-wrapper" style="margin-bottom: 20px;"> <span class="ant-input-wrapper ant-input-group"> <span class="ant-input-group-addon"> <span style="margin-right: 7px; margin-left: 7px;">Mobile Number</span> </span> <span class="genesis-data genesis-mutate genesis-mutate-2 ant-input-affix-wrapper"> <span class="ant-input-prefix"><i class="anticon anticon-file-text"></i></span> <input type="text" class="ant-input"> </span> </span> </span> </div> </div> </div> </div> </div> </div> </div> </div> ');
 	});
 </script>
 </html>

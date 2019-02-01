@@ -13,6 +13,9 @@ deployedContract = KycSmartContract.new(['IndianBank','Airtel','Jio','TataSky','
 
 console.log("contract address : "+deployedContract.address);
 
+web3.eth.defaultAccount = web3.eth.accounts[0]
+deployedContract.addCustomer('swami','myhash',web3.eth.accounts[0],{from:web3.eth.accounts[0],gas:4700000})
+
 web3.eth.blockNumber // return current block number
 web3.eth.getBlock(blockHashOrBlockNumber [, returnTransactionObjects] [, callback]) // returns a block given the hash or number
 

@@ -129,7 +129,7 @@ contract KycSmartContract {
     }
 
 
-    function addCustomer(string memory Uname, string  DataHash,address oAddress) public payable returns(uint) {
+    function addCustomer(string Uname, string  DataHash,address oAddress) public payable returns(uint) {
         allCustomers.length ++;
         allCustomers[allCustomers.length-1] = Customer(Uname, DataHash, oAddress);
         return 0;
