@@ -5,6 +5,7 @@
   		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
   		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>	
+  		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 		<style>
 		td{
 			padding: 7px;
@@ -60,14 +61,21 @@
 						<td> <input type="number" name="mobile" required> </td>
 					</tr>
 					<tr>
-						<td> <input type="submit" value="Add Block" required></td>
+						<td> <input type="button" class="press" value="Add Block" required></td>
 					</tr>
 			    </div>
 			</table>
-		</center>	
+		</center>
+		<div id="box"></div>
+		
+
 
 	</body>
-
+<script>
+			$(".press").click(function () {
+  			$("#box").append('<center><div class="container"> <table cellspacing="5"> <tr> <td> NAME </td> <td> <input type="text" name="name" required> </td> </tr> <tr> <td> GENDER </td> <td> <input type="text" name="gender" required> </td> </tr> <tr> <td> DATE OF BIRTH </td> <td> <input type="date" name="dob" required> </td> </tr> <tr> <td> MARITUL STATUS </td> <td> <input type="text" name="marital" required> </td> </tr> <tr> <td> AADHAR NUMBER </td> <td> <input type="text" name="aadha" required> </td> </tr> <tr> <td> DRIVING LICENCE NUMBER </td> <td> <input type="text" name="licence" required> </td> </tr> <tr> <td> PAN </td> <td> <input type="text" name="pan" required> </td> </tr> <tr> <td> e-mail ID </td> <td> <input type="email" name="email" required> </td> </tr> <tr> <td> MOBILE NUMBER </td> <td> <input type="number" name="mobile" required> </td> </tr> <tr> <td> <input type="button" class="press" value="Add Block" required></td> </tr> </div> </table> </center></center>');
+			});
+		</script>
 </html>
 
 
