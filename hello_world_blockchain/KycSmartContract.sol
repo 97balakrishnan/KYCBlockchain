@@ -3,29 +3,28 @@ pragma solidity ^0.4.23;
 contract KycSmartContract {
 
     struct Customer {
-        string uname;
-        string gender;
-        string dob;
-        string maritalStatus;
-        string aadharNumber;
-        string driversLicense;
-        string pan;
-        string email;
-        string phone;
+        bytes32 uname;
+        bytes32 gender;
+        bytes32 dob;
+        bytes32 maritalStatus;
+        bytes32 aadharNumber;
+        bytes32 driversLicense;
+        bytes32 pan;
+        bytes32 email;
+        bytes32 phone;
         bytes32 dataHash;
         bool isVerified;
         address oAddress;
     }
 
     struct Organisation {
-        string oname;
-        string password;
+        bytes32 oname;
         address oAddress;
     }
 
     struct Request {
-        string uemail;
-        string oname;
+        bytes32 uemail;
+        bytes32 oname;
         address orgAddress;
         bool isAllowed;
     }
@@ -33,7 +32,6 @@ contract KycSmartContract {
     Customer[] allCustomers;
     Organisation[] allOrgs;
     Request[] allRequests;
-    bytes32[] orgNamesList;
     
     constructor() public {
         
@@ -43,13 +41,14 @@ contract KycSmartContract {
     return true;
     }
    
-    function addOrganization(string uname,string password,address eth) public payable returns(uint) {
+    function addOrganization(bytes32 uname,bytes32 password,address eth) public payable returns(uint) {
+            bytes memory b = abi.encodePacked(password);
             allOrgs.length ++;
-            allOrgs[allOrgs.length - 1] = Organisation(uname,password,eth);
+            allOrgs[allOrgs.length - 1] = Organisation(uname,eth);
             return 0;
     }
     
-    function getOrganizationName(uint index) view returns (string){
+    function getOrganizationName(uint index) view returns (bytes32){
       return allOrgs[index].oname;
     }
     
@@ -57,11 +56,11 @@ contract KycSmartContract {
       return allOrgs.length;
     }
     
-    function getOrganizationData(uint index) view returns (string,address) {
+    function getOrganizationData(uint index) view returns (bytes32,address) {
         return (allOrgs[index].oname,allOrgs[index].oAddress);
     }
     
-    function addCustomer(string uname, string gender, string dob, string maritalStatus, string aadharNumber, string driversLicense, string pan, string email, string phone, bytes32 dataHash, bool isVerified, address oAddress) public payable returns(uint) {
+    function addCustomer(bytes32 uname, bytes32 gender, bytes32 dob, bytes32 maritalStatus, bytes32 aadharNumber, bytes32 driversLicense, bytes32 pan, bytes32 email, bytes32 phone, bytes32 dataHash, bool isVerified, address oAddress) public payable returns(uint) {
         allCustomers.length ++;
         dataHash = block.blockhash(block.number);
         allCustomers[allCustomers.length-1] = Customer(uname,gender,dob,maritalStatus,aadharNumber,driversLicense,pan,email,phone,dataHash,isVerified,oAddress);
@@ -71,18 +70,28 @@ contract KycSmartContract {
     function getCustomersCount() view returns (uint){
         return allCustomers.length;
     }
-    
-    function getCustomerData(string oname,uint index) view returns (string,string,string,string,string,string,string,string,string,bytes32,bool,address,bool){
-        bool isAvailable = false;
+   
+    function isAvailable(bytes32 oname,uint index) returns(bool){
+        bool dAvailable = false;
         for(uint i=0;i<allRequests.length;i++) {
-            if(stringsEqual(allRequests[i].oname,oname) && stringsEqual(allCustomers[index].email,allRequests[i].uemail) && allRequests[i].isAllowed == true) {
-              isAvailable = true;  
+            if(allRequests[i].oname==oname)
+                if( allCustomers[index].email==allRequests[i].uemail)
+                    if(allRequests[i].isAllowed == true) {
+                        dAvailable = true;  
             } 
         }
-        return (allCustomers[index].uname,allCustomers[index].gender,allCustomers[index].dob,allCustomers[index].maritalStatus,allCustomers[index].aadharNumber,allCustomers[index].driversLicense,allCustomers[index].pan,allCustomers[index].email,allCustomers[index].phone,allCustomers[index].dataHash,allCustomers[index].isVerified,allCustomers[index].oAddress,isAvailable);
+        return dAvailable;
     }
-
-    function sendRequest(string uemail,string oname,address orgAddress) public payable{
+    
+    function getCustomerData(bytes32 oname,uint index) view returns (bytes32,bytes32,bytes32,bytes32,bytes32,bytes32,bytes32,bytes32,bool,address){
+        bytes32 n = "";
+        Customer storage c = allCustomers[index];
+        if(isAvailable(oname,index)==true) {
+            return (c.uname,c.gender,c.dob,c.email,c.phone,c.driversLicense,c.aadharNumber,c.pan,c.isVerified,c.oAddress);
+        }
+    }
+    
+    function sendRequest(bytes32 uemail,bytes32 oname,address orgAddress) public payable{
         allRequests.length ++;
         allRequests[allRequests.length - 1] = Request(uemail,oname,orgAddress,false);
     }
@@ -91,14 +100,18 @@ contract KycSmartContract {
         allRequests[index].isAllowed=true;
     }
     
-    function getRequestOrgs(string uemail) view returns(string) {
+    function getRequestOrgs(bytes32 uemail) view returns(string) {
         string memory orgList="";
         for(uint i=0;i<allRequests.length;i++) {
-            if(stringsEqual(allRequests[i].uemail,uemail)) {
-                orgList = append(orgList,allRequests[i].oname);
+            if(allRequests[i].uemail==uemail) {
+                orgList = append(orgList,bytes32ToString(allRequests[i].oname));
             }
         }
         return orgList;
+    }
+    
+    function append(string a, string b) internal pure returns (string) {
+        return string(abi.encodePacked(a,",",b));
     }
     
     function bytes32ToString(bytes32 x) public returns (string memory) {
@@ -118,59 +131,14 @@ contract KycSmartContract {
       return string(bytesStringTrimmed);
     }
   
-    function append(string a, string b) internal pure returns (string) {
-        return string(abi.encodePacked(a,",",b));
-    }
-    
-    function ifAllowed(string memory Uname, address orgAddress) public payable returns(bool) {
+    function ifAllowed(bytes32 uemail, address orgAddress) public payable returns(bool) {
         for(uint i = 0; i < allRequests.length; ++i) {
-            if(stringsEqual(allRequests[i].uname, Uname) && allRequests[i].orgAddress == orgAddress && allRequests[i].isAllowed) {
+            if(allRequests[i].uemail==uemail && allRequests[i].orgAddress == orgAddress && allRequests[i].isAllowed) {
                 return true;
             }
         }
         return false;
     }
-
-    function getOrgRequestAddress(string memory Uname, uint ind) public payable returns(address) {
-        uint j = 0;
-        for(uint i=0;i<allRequests.length;++i) {
-            if(stringsEqual(allRequests[i].uname, Uname) && j == ind && allRequests[i].isAllowed == false) {
-                return allRequests[i].orgAddress;
-            }
-            j++;
-        }
-        return allRequests[0].orgAddress;
-    }
-
-    function allowBank(string memory Uname, address orgAddress, bool isAllowed) public payable {
-        for(uint i = 0; i < allRequests.length; ++ i) {
-            if(stringsEqual(allRequests[i].uname, Uname) && allRequests[i].orgAddress == orgAddress) {
-                if(isAllowed) {
-                    allRequests[i].isAllowed = true;
-                } else {
-                    for(uint j=i;j<allRequests.length-2; ++j) {
-                        allRequests[i] = allRequests[i+1];
-                    }
-                    allRequests.length --;
-                }
-                return;
-            }
-        }
-    }
-
-    function stringsEqual(string storage _a, string memory _b) internal returns (bool) {
-        bytes storage a = bytes(_a);
-        bytes memory b = bytes(_b);
-        if (a.length != b.length)
-          return false;
-        
-        for (uint i = 0; i < a.length; i ++)
-              {
-          if (a[i] != b[i])
-            return false;
-              }
-        return true;
-    }
-
+    
     
 }
