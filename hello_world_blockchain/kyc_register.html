@@ -6,13 +6,15 @@
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/web3@0.20.4/dist/web3.js"></script>
+	<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script>
 	<script src="kyc_register.js"></script>
 </head>
 <body>
 	<div class="valid-chain replace-chain">
 		<h1 style="text-align: center; font-size: 40pt; margin-bottom: 33px; letter-spacing: 3px; position: relative; z-index: 999;">Customer Registration </h1><div class="blockchain-step immutability fifty-attack">
 
-			<form onsubmit="submitData()">
+			<form>
 			
 			<div id="box">
 				<div class="ant-card genesis block block-shadow ant-card-bordered">
@@ -135,7 +137,7 @@
 										</span>
 									</span>
 								</div>
-								<center> <input type="submit" class="btn btn-success"> </button></center>							
+								<center> <button  type = "button" class="btn btn-success" onClick="submitData()"> SUBMIT</button></center>							
 						</div>
 					</div>
 				</div>

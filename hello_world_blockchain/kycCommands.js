@@ -1,3 +1,5 @@
+node_modules/.bin/ganache-cli
+
 Web3 = require('web3');
 fs = require('fs');
 web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
