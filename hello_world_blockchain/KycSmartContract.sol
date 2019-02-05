@@ -89,6 +89,9 @@ contract KycSmartContract {
         if(isAvailable(oname,index)==true) {
             return (c.uname,c.gender,c.dob,c.email,c.phone,c.driversLicense,c.aadharNumber,c.pan,c.isVerified,c.oAddress);
         }
+        else {
+            return (c.uname,n,n,c.email,n,n,n,n,c.isVerified,c.oAddress);
+        }
     }
     
     function sendRequest(bytes32 uemail,bytes32 oname,address orgAddress) public payable{
