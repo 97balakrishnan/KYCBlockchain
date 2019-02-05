@@ -40,7 +40,9 @@ contract KycSmartContract {
     function checkDeployed() view returns(bool){
     return true;
     }
-   
+    function getDataHash(uint index) view returns(bytes32) {
+        return blockhash(index);
+    }
     function addOrganization(bytes32 uname,bytes32 password,address eth) public payable returns(uint) {
             bytes memory b = abi.encodePacked(password);
             allOrgs.length ++;
@@ -62,7 +64,7 @@ contract KycSmartContract {
 
     function addCustomer(bytes32 uname, bytes32 gender, bytes32 dob, bytes32 maritalStatus, bytes32 aadharNumber, bytes32 driversLicense, bytes32 pan, bytes32 email, bytes32 phone,bool isVerified, address oAddress) public returns(uint) {
         allCustomers.length ++;
-        bytes32 dataHash = block.blockhash(block.number);
+        bytes32 dataHash =blockhash(block.number);
         allCustomers[allCustomers.length-1] = Customer(uname,gender,dob,maritalStatus,aadharNumber,driversLicense,pan,email,phone,dataHash,isVerified,oAddress);
         return 0;
     }
@@ -83,11 +85,15 @@ contract KycSmartContract {
         return dAvailable;
     }
     
-    function getCustomerData(bytes32 oname,uint index) view returns (bytes32,bytes32,bytes32,bytes32,bytes32,bytes32,bytes32,bytes32,bool,address){
+    function getCustomerData(bytes32 oname,uint index) view returns (bytes32,bytes32,bytes32,bytes32,bytes32,bytes32,bool,address){
         bytes32 n = "";
-        Customer storage c = allCustomers[index];
+       Customer storage c = allCustomers[index];
+        
         if(isAvailable(oname,index)==true) {
-            return (c.uname,c.gender,c.dob,c.email,c.phone,c.driversLicense,c.aadharNumber,c.pan,c.isVerified,c.oAddress);
+            return (c.uname,c.email,c.phone,c.driversLicense,c.aadharNumber,c.pan,c.isVerified,c.oAddress);
+        }
+        else {
+            return (c.uname,c.email,n,n,n,n,c.isVerified,c.oAddress);
         }
     }
     
