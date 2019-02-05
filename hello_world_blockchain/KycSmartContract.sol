@@ -59,10 +59,10 @@ contract KycSmartContract {
     function getOrganizationData(uint index) view returns (bytes32,address) {
         return (allOrgs[index].oname,allOrgs[index].oAddress);
     }
-    
-    function addCustomer(bytes32 uname, bytes32 gender, bytes32 dob, bytes32 maritalStatus, bytes32 aadharNumber, bytes32 driversLicense, bytes32 pan, bytes32 email, bytes32 phone, bytes32 dataHash, bool isVerified, address oAddress) public payable returns(uint) {
+
+    function addCustomer(bytes32 uname, bytes32 gender, bytes32 dob, bytes32 maritalStatus, bytes32 aadharNumber, bytes32 driversLicense, bytes32 pan, bytes32 email, bytes32 phone,bool isVerified, address oAddress) public returns(uint) {
         allCustomers.length ++;
-        dataHash = block.blockhash(block.number);
+        bytes32 dataHash = block.blockhash(block.number);
         allCustomers[allCustomers.length-1] = Customer(uname,gender,dob,maritalStatus,aadharNumber,driversLicense,pan,email,phone,dataHash,isVerified,oAddress);
         return 0;
     }
@@ -88,9 +88,6 @@ contract KycSmartContract {
         Customer storage c = allCustomers[index];
         if(isAvailable(oname,index)==true) {
             return (c.uname,c.gender,c.dob,c.email,c.phone,c.driversLicense,c.aadharNumber,c.pan,c.isVerified,c.oAddress);
-        }
-        else {
-            return (c.uname,n,n,c.email,n,n,n,n,c.isVerified,c.oAddress);
         }
     }
     
