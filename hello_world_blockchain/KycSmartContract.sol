@@ -43,7 +43,7 @@ contract KycSmartContract {
     function getDataHash(uint index) view returns(bytes32) {
         return blockhash(index);
     }
-    function addOrganization(bytes32 uname,bytes32 password,address eth) public payable returns(uint) {
+    function addOrganization(bytes32 uname,bytes32 password,address eth) public returns(uint) {
             bytes memory b = abi.encodePacked(password);
             allOrgs.length ++;
             allOrgs[allOrgs.length - 1] = Organisation(uname,eth);
@@ -97,7 +97,7 @@ contract KycSmartContract {
         }
     }
     
-    function sendRequest(bytes32 uemail,bytes32 oname,address orgAddress) public payable{
+    function sendRequest(bytes32 uemail,bytes32 oname,address orgAddress) public {
         allRequests.length ++;
         allRequests[allRequests.length - 1] = Request(uemail,oname,orgAddress,false);
     }
@@ -137,7 +137,7 @@ contract KycSmartContract {
       return string(bytesStringTrimmed);
     }
   
-    function ifAllowed(bytes32 uemail, address orgAddress) public payable returns(bool) {
+    function ifAllowed(bytes32 uemail, address orgAddress) public returns(bool) {
         for(uint i = 0; i < allRequests.length; ++i) {
             if(allRequests[i].uemail==uemail && allRequests[i].orgAddress == orgAddress && allRequests[i].isAllowed) {
                 return true;
