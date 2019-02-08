@@ -73,11 +73,11 @@ contract KycSmartContract {
         return allCustomers.length;
     }
    
-    function isAvailable(bytes32 oname,uint index) returns(bool){
+    function isAvailable(bytes32 oname,bytes32 uemail) returns(bool){
         bool dAvailable = false;
         for(uint i=0;i<allRequests.length;i++) {
             if(allRequests[i].oname==oname)
-                if( allCustomers[index].email==allRequests[i].uemail)
+                if( uemail==allRequests[i].uemail)
                     if(allRequests[i].isAllowed == true) {
                         dAvailable = true;  
             } 
@@ -89,7 +89,7 @@ contract KycSmartContract {
         bytes32 n = "";
        Customer storage c = allCustomers[index];
         
-        if(isAvailable(oname,index)==true) {
+        if(isAvailable(oname,c.email)==true) {
             return (c.uname,c.email,c.phone,c.driversLicense,c.aadharNumber,c.pan,c.isVerified,c.oAddress);
         }
         else {
@@ -102,8 +102,12 @@ contract KycSmartContract {
         allRequests[allRequests.length - 1] = Request(uemail,oname,orgAddress,false);
     }
     
-    function approveRequest(uint index) {
-        allRequests[index].isAllowed=true;
+    function approveRequest(bytes32 oname,bytes32 uemail) {
+        for(uint i=0;i<allRequests.length;i++) {
+            if(allRequests[i].oname==oname && allRequests[i].uemail==uemail) {
+                allRequests[i].isAllowed=true;
+            }
+        }
     }
     
     function getRequestOrgs(bytes32 uemail) view returns(string) {
@@ -145,6 +149,12 @@ contract KycSmartContract {
         }
         return false;
     }
-    
+    function verifyCustomer(bytes32 uemail,bytes32 oname) {
+        for(uint i=0;i<allCustomers.length;i++) {
+            if(allCustomers[i].email==uemail) {
+                allCustomers[i].isVerified=true;
+            }
+        }    
+    }
     
 }
