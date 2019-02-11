@@ -1,7 +1,7 @@
 web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
 abi = JSON.parse(getAbi());
 KycContract = web3.eth.contract(abi);
-window.localStorage.setItem('oname', 'airtel');
+
 var oname = window.localStorage.getItem('oname');
 // In your nodejs console, execute contractInstance.address to get the address at which the contract is deployed and change the line below to use your deployed address
 contractInstance = KycContract.at(getAddress());
