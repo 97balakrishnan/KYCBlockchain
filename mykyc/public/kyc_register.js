@@ -10,6 +10,7 @@ var originalEncrypted;
 var encryptedString;
 var jsonString;
 var compressedEncrypted;
+var userkey;
 
 var obj={name:"",gender:"",dob:"",marital:"",aadhar:"",driver:"",pan:"",email:"",mobile:""};
 
@@ -26,6 +27,8 @@ function submitData() {
 	obj.email = document.getElementById("email").value.toString();
 	obj.mobile = document.getElementById("mobile").value.toString();
 	
+	
+
 	jsonString = JSON.stringify(obj);
 	console.log("Original data : \n"+jsonString);
 	console.log("Original length : "+jsonString.length);
@@ -82,15 +85,23 @@ function compressLZUTF8() {
 		console.log("compressed data : \n"+compressedString);
 		console.log("compressed length : "+compressedString.length);
 		console.log("\n\n");
-		compressedEncrypted = CryptoJS.AES.encrypt(compressedString, "mypassword").toString();
+		userkey = Generate_key();
+		console.log("User key : "+userkey);
+		compressedEncrypted = CryptoJS.AES.encrypt(compressedString,userkey).toString();
 		console.log("Compressed Encrypted data : \n"+compressedEncrypted);
 		console.log("Compressed Encrypted length : "+compressedEncrypted.length);
 		console.log("\n\n");
 		
-		contractInstance.addCustomer(obj.name,obj.email,compressedString,'goldenBank',{from: web3.eth.accounts[0],gas:3000000});
+		contractInstance.addCustomer(obj.name,obj.email,compressedEncrypted,'goldenBank',{from: web3.eth.accounts[0],gas:3000000});
 
+		sendMail(obj.name,obj.email);
 	});
 
+}
+function sendMail(name,email) {
+	$.post("/sendmail",{name:name,email:email,key:userkey},function(data,status){
+		alert("User Passkey of "+name+" mailed to "+email+" ! ");
+	});
 }
 function decompressFn() {
 
@@ -103,4 +114,14 @@ function decompressFn() {
 			console.log("Original data length : "+decrypted.length);
 			console.log("\n\n");
 	});
+}
+function Generate_key() {
+    var key = "";
+    var hex = "0123456789abcdefghijklmnopqrstuvwxyz";
+
+    for (i = 0; i < 64; i++) {
+        key += hex.charAt(Math.floor(Math.random() * 100)%hex.length);
+        //Initially this was charAt(chance.integer({min: 0, max: 15}));
+    }
+    return key;
 }

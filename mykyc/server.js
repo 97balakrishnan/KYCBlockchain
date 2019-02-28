@@ -5,6 +5,8 @@ var zlib = require('zlib');
 var LZUTF8 = require('lzutf8');
 var brotli = require('brotli');
 var CryptoJS = require("crypto-js");
+var nodemailer = require('nodemailer');
+
 var app=express();
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended:false }));
@@ -93,17 +95,22 @@ app.post('/view_customer',function(req,res){
     	
 	var encryptedJSON = req.body.json;
 	var key = req.body.key;
+	console.log("Encrypted json : "+encryptedJSON);
 	try{
-		var input = CryptoJS.AES.decrypt(ciphertext, "mypassword" ).toString(CryptoJS.enc.Utf8);
+		var input = CryptoJS.AES.decrypt(encryptedJSON, req.body.key ).toString(CryptoJS.enc.Utf8);
+		console.log("Decrypted : "+input);
 		var jsonString = decompress(input);
+		console.log("Json string : "+jsonString);
 		res.send(JSON.stringify({error:"",json:jsonString}));
 	}
 	catch(err) {
+		console.log(err);
 		res.send(JSON.stringify({ error: "invalid_key" }));
 		//res.json({error:"invalid_key"}).send("localhost:3000/invalid_key.html")
 	}
 	
 	console.log(key);
+	
 
 });
 function getString(ba) {
@@ -158,6 +165,38 @@ function decompress(deflatedString) {
 	var inflated = LZUTF8.decompress(new Buffer(deflatedBytes,'base64')).toString();
 	return inflated;
 }
+
+
+
+app.post("/sendmail",function(req,res){
+
+
+
+	var transporter = nodemailer.createTransport({
+		service: 'gmail',
+		auth: {
+		  user: 'noreplyKYC.project@gmail.com',
+		  pass: 'kycpassword'
+		}
+	  });
+	  
+	  var mailOptions = {
+		from: 'noreplyKYC.project@gmail.com',
+		to: req.body.email,
+		subject: 'KYC Password',
+		text: 'Dear user please find below the secret key for KYC verification \n '+req.body.key+'\n\n Do not share this confidential information to anyone !'
+	  };
+	  
+	  transporter.sendMail(mailOptions, function(error, info){
+		if (error) {
+		  console.log(error);
+		} else {
+		  console.log('Email sent: ' + info.response);
+		}
+	  });
+	  
+});
+
 	/*
 	console.log("\n\n");
 	console.log("Compression using lzutf8");

@@ -27,7 +27,7 @@ $(document).ready(function() {
 function viewKYC(button) {
 	var customerIndex = button.id;
 	var customerData = contractInstance.getCustomerData(customerIndex);
-	var encryptedCompressedData = web3.toAscii(customerData[3]);
+	var encryptedCompressedData = web3.toAscii(customerData[2]);
 	
 	var userkey = prompt("Please enter customer userkey : ", "xxxxxxxxxx");
 	if (userkey == null || userkey == "") {
