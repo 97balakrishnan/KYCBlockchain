@@ -9,17 +9,22 @@ var app=express();
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended:false }));
 app.use(express.static(path.join(__dirname,'public')));
+
 app.get('/reg',function(req,res){
 	res.sendFile(__dirname+"/public/kyc_register.html");
 });
+app.get('/org_login',function(req,res){
+	res.sendFile(__dirname+"/public/org_login.html");
+});
+
 app.listen(3000,function(){
 	console.log("Server Running in the port 3000");
 })
-app.post('/compress',function(req,res){
+app.post('/compress-lzutf8',function(req,res){
 	
 	console.log(req.body.json);
-	var ciphertext = req.body.json;
-	var input = CryptoJS.AES.decrypt(ciphertext, "mypassword" ).toString(CryptoJS.enc.Utf8);
+	var input = req.body.json;
+	//var input = CryptoJS.AES.decrypt(ciphertext, "mypassword" ).toString(CryptoJS.enc.Utf8);
 	console.log("Decrypted : "+input+"\n\n");
 
    	console.log("Original size : "+input.length);
@@ -31,9 +36,74 @@ app.post('/compress',function(req,res){
    	console.log("Deflated : "+deflated.join(""));
 
    	var deflatedString = getString(deflated);
+  	//var deflatedEncrypt = CryptoJS.AES.encrypt(deflatedString,"mypassword").toString();
+   	res.send(deflatedString);
+	
+});
+
+app.post('/compress-deflate',function(req,res){
+	
+	console.log(req.body.json);
+	var ciphertext = req.body.json;
+	var input = CryptoJS.AES.decrypt(ciphertext, "mypassword" ).toString(CryptoJS.enc.Utf8);
+	console.log("Decrypted : "+input+"\n\n");
+
+   	console.log("Original size : "+input.length);
+   	console.log("\n\n");
+   	
+	var deflatedString = zlib.deflateSync(input).toString('base64');
+	
+	console.log("Deflated : "+deflatedString);
+	console.log("Deflated size : "+deflatedString.length);
+   	//console.log("Deflated string: "+getString(deflated));
+   	//console.log("Deflated join: "+deflated.join(""));
+
+   	//var deflatedString = getString(deflated);
    	var deflatedEncrypt = CryptoJS.AES.encrypt(deflatedString,"mypassword").toString();
    	res.send(deflatedEncrypt);
 
+});
+
+app.post('/compress-brotli',function(req,res){
+	
+	console.log(req.body.json);
+	var ciphertext = req.body.json;
+	var input = CryptoJS.AES.decrypt(ciphertext, "mypassword" ).toString(CryptoJS.enc.Utf8);
+	console.log("Decrypted : "+input+"\n\n");
+
+   	console.log("Original size : "+input.length);
+   	console.log("\n\n");
+   	
+	var deflated = brotli.compress(input);
+	console.log("deflated "+deflated);
+	//console.log("inflated : "+brotli.decompress(getString(deflated)));
+	console.log("inflated string : "+brotli.decompress(deflated));
+	console.log("Deflated bytelength: "+deflated.byteLength);
+   	console.log("Deflated string: "+getString(deflated));
+   	console.log("Deflated join: "+deflated.join(""));
+
+   	var deflatedString = getString(deflated);
+   	var deflatedEncrypt = CryptoJS.AES.encrypt(deflatedString,"mypassword").toString();
+   	res.send(deflatedEncrypt);
+
+});
+app.post('/view_customer',function(req,res){
+
+	res.setHeader('Content-Type', 'application/json');
+    	
+	var encryptedJSON = req.body.json;
+	var key = req.body.key;
+	try{
+		var input = CryptoJS.AES.decrypt(ciphertext, "mypassword" ).toString(CryptoJS.enc.Utf8);
+		var jsonString = decompress(input);
+		res.send(JSON.stringify({error:"",json:jsonString}));
+	}
+	catch(err) {
+		res.send(JSON.stringify({ error: "invalid_key" }));
+		//res.json({error:"invalid_key"}).send("localhost:3000/invalid_key.html")
+	}
+	
+	console.log(key);
 
 });
 function getString(ba) {
@@ -80,6 +150,14 @@ app.post('/decompress',function(req,res){
 	res.send(inflatedEncrypt);
 	
 });
+function decompress(deflatedString) {
+	var deflatedBytes = getBytes(deflatedString);
+	console.log("deflated : "+deflatedString);
+	console.log("deflated : "+deflatedBytes);
+	//var inflated = zlib.inflateSync(deflatedBytes.toString('base64')).toString();
+	var inflated = LZUTF8.decompress(new Buffer(deflatedBytes,'base64')).toString();
+	return inflated;
+}
 	/*
 	console.log("\n\n");
 	console.log("Compression using lzutf8");

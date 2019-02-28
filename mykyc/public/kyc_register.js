@@ -6,11 +6,16 @@ KycContract = web3.eth.contract(abi);
 contractInstance = KycContract.at(getAddress());
 console.log(contractInstance.address);
 var compressedString;
-var encrypted;
+var originalEncrypted;
 var encryptedString;
+var jsonString;
+var compressedEncrypted;
+
+var obj={name:"",gender:"",dob:"",marital:"",aadhar:"",driver:"",pan:"",email:"",mobile:""};
+
 function submitData() {
 	console.log("HELLO");
-	var obj={name:"",gender:"",dob:"",marital:"",aadhar:"",driver:"",pan:"",email:"",mobile:""};
+	
 	obj.name = document.getElementById("name").value.toString();
 	obj.gender = document.getElementById("gender").value.toString();
 	obj.dob = document.getElementById("dob").value.toString();
@@ -21,30 +26,72 @@ function submitData() {
 	obj.email = document.getElementById("email").value.toString();
 	obj.mobile = document.getElementById("mobile").value.toString();
 	
-	var jsonString = JSON.stringify(obj);
+	jsonString = JSON.stringify(obj);
 	console.log("Original data : \n"+jsonString);
 	console.log("Original length : "+jsonString.length);
 	console.log("\n\n");
-	encrypted = CryptoJS.AES.encrypt(jsonString, "mypassword");
-	console.log("Original Encrypted data : \n"+encrypted.toString());
-	console.log("Original Encrypted data length : "+encrypted.toString().length);
+	originalEncrypted = CryptoJS.AES.encrypt(jsonString, "mypassword").toString();
+	console.log("Original Encrypted data : \n"+originalEncrypted);
+	console.log("Original Encrypted data length : "+originalEncrypted.length);
 	console.log("\n\n");
-	$.post("/compress",{json:encrypted.toString()},function(data,status){
-    		compressedString=data;
-			var decryptedCompress = CryptoJS.AES.decrypt(data, "mypassword").toString(CryptoJS.enc.Utf8);;
-			console.log("compressed data : \n"+decryptedCompress);
-			console.log("compressed length : "+decryptedCompress.length);
-			console.log("\n\n");
-			console.log("Compressed Encrypted data : \n"+compressedString);
-			console.log("Compressed Encrypted length : "+compressedString.length);
-			console.log("\n\n");
-			decompressFn();
-    });
-
-	//contractInstance.addCustomer(name,gender,dob,marital,aadhar,driver,pan,email,mobile,false,web3.eth.accounts[0],{from: web3.eth.accounts[0],gas:3000000});
 	
-}
+	
+	
+	compressLZUTF8();
+	//compressDeflate();
+	//compressBrotli();
 
+	alert('customer added');
+
+}
+function compressDeflate(){
+	$.post("/compress-deflate",{json:originalEncrypted},function(data,status){
+		compressedString=data;
+		var decryptedCompress = CryptoJS.AES.decrypt(data, "mypassword").toString(CryptoJS.enc.Utf8);;
+		console.log("compressed data : \n"+decryptedCompress);
+		console.log("compressed length : "+decryptedCompress.length);
+		console.log("\n\n");
+		console.log("Compressed Encrypted data : \n"+compressedString);
+		console.log("Compressed Encrypted length : "+compressedString.length);
+		console.log("\n\n");
+		
+		//contractInstance.addCustomer(compressedString,'goldenBank',{from: web3.eth.accounts[0],gas:3000000});
+	});
+
+}
+function compressBrotli() {
+	$.post("/compress-brotli",{json:originalEncrypted},function(data,status){
+		compressedString=data;
+		var decryptedCompress = CryptoJS.AES.decrypt(data, "mypassword").toString(CryptoJS.enc.Utf8);;
+		console.log("compressed data : \n"+decryptedCompress);
+		console.log("compressed length : "+decryptedCompress.length);
+		console.log("\n\n");
+		console.log("Compressed Encrypted data : \n"+compressedString);
+		console.log("Compressed Encrypted length : "+compressedString.length);
+		console.log("\n\n");
+		
+		//contractInstance.addCustomer(compressedString,'goldenBank',{from: web3.eth.accounts[0],gas:3000000});
+	});
+
+}
+function compressLZUTF8() {
+
+	$.post("/compress-lzutf8",{json:jsonString},function(data,status){
+		compressedString=data;
+		//var decryptedCompress = CryptoJS.AES.decrypt(data, "mypassword").toString(CryptoJS.enc.Utf8);;
+		console.log("compressed data : \n"+compressedString);
+		console.log("compressed length : "+compressedString.length);
+		console.log("\n\n");
+		compressedEncrypted = CryptoJS.AES.encrypt(compressedString, "mypassword").toString();
+		console.log("Compressed Encrypted data : \n"+compressedEncrypted);
+		console.log("Compressed Encrypted length : "+compressedEncrypted.length);
+		console.log("\n\n");
+		
+		contractInstance.addCustomer(obj.name,obj.email,compressedString,'goldenBank',{from: web3.eth.accounts[0],gas:3000000});
+
+	});
+
+}
 function decompressFn() {
 
     $.post("/decompress",{cjson:compressedString},function(data,status){
