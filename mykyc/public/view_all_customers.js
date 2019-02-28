@@ -28,7 +28,7 @@ function viewKYC(button) {
 	var customerIndex = button.id;
 	var customerData = contractInstance.getCustomerData(customerIndex);
 	var encryptedCompressedData = web3.toAscii(customerData[2]);
-	
+	var verifier = web3.toAscii(customerData[3]);
 	var userkey = prompt("Please enter customer userkey : ", "xxxxxxxxxx");
 	if (userkey == null || userkey == "") {
 		alert("Invalid key !");
@@ -39,9 +39,13 @@ function viewKYC(button) {
 				alert("Invalid key error!");
 			}
 			else{
-				console.log(data.json);
+				loadCustomer(data.json,verifier);
 			}
 		});
 	}
-	
+}
+function loadCustomer(jsonString,verifier){
+	localStorage.setItem('json',jsonString);
+	localStorage.setItem('verifier',verifier);
+	location.href="http://localhost:3000/view_customer_kyc.html"
 }
