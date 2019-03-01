@@ -27,40 +27,9 @@ $(document).ready(function() {
 var userkey;
 function viewKYC(button) {
 	var customerIndex = button.id;
-	var customerData = contractInstance.getCustomerData(customerIndex);
-	var name=web3.toAscii(customerData[0]);
-	var email=web3.toAscii(customerData[1]);
-	var encryptedCompressedData = web3.toAscii(customerData[2]);
-	var verifier = web3.toAscii(customerData[3]);
-	userkey = prompt("Please enter customer userkey : ", "xxxxxxxxxx");
-	if (userkey == null || userkey == "") {
-		alert("Invalid key !");
-	} else {
-		$.post("/view_customer",{json:encryptedCompressedData,key:userkey},function(data,status){
-			
-			if(data.error=='invalid_key') {
-				alert("Invalid key error!");
-			}
-			else{
-				alert("Valid key !");
-				sendAlertMail(name,email);
-				loadCustomer(data.json,verifier);
-			}
-		});
-	}
-}
-function loadCustomer(jsonString,verifier){
-	localStorage.setItem('json',jsonString);
-	localStorage.setItem('verifier',verifier);
-	location.href="http://localhost:3000/view_customer_kyc.html"
+	localStorage.setItem('customerindex',customerIndex);
+	location.href = "http://localhost:3000/scanner.html";
 }
 function menu() {
 	location.href="http://localhost:3000/menu.html"
-}
-function sendAlertMail(name,email) {
-	var d = new Date();
-	console.log(d.toString());
-	$.post("/alertmail",{name:name,email:email,key:userkey,time:d.toString(),oname:localStorage.getItem('oname')},function(data,status){
-		
-	});
 }
