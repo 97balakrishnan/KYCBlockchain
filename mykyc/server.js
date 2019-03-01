@@ -12,6 +12,9 @@ app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended:false }));
 app.use(express.static(path.join(__dirname,'public')));
 
+app.get('/',function(req,res) {
+	res.sendFile(__dirname+"/public/org_login.html");
+});
 app.get('/reg',function(req,res){
 	res.sendFile(__dirname+"/public/kyc_register.html");
 });
@@ -184,7 +187,7 @@ app.post("/sendmail",function(req,res){
 		from: 'noreplyKYC.project@gmail.com',
 		to: req.body.email,
 		subject: 'KYC Password',
-		text: 'Dear user please find below the secret key for KYC verification \n '+req.body.key+'\n\n Do not share this confidential information to anyone !'
+		html: 'Dear user please find below the secret key for KYC verification \n '+req.body.key+'<br><img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data='+req.body.key+'"><br> Do not share this confidential information to anyone !<br>'
 	  };
 	  
 	  transporter.sendMail(mailOptions, function(error, info){
@@ -196,7 +199,32 @@ app.post("/sendmail",function(req,res){
 	  });
 	  
 });
+app.post("/alertmail",function(req,res){
 
+	var transporter = nodemailer.createTransport({
+		service: 'gmail',
+		auth: {
+		  user: 'noreplyKYC.project@gmail.com',
+		  pass: 'kycpassword'
+		}
+	  });
+	  
+	  var mailOptions = {
+		from: 'noreplyKYC.project@gmail.com',
+		to: req.body.email,
+		subject: 'KYC Access alert',
+		text: "Dear customer , \n\t Your KYC Data was accessed recently by "+req.body.oname+" at "+req.body.time+"\n If this activity is unusual please contact your nearest KYC organization for key change"
+	  };
+	  
+	  transporter.sendMail(mailOptions, function(error, info){
+		if (error) {
+		  console.log(error);
+		} else {
+		  console.log('Email sent: ' + info.response);
+		}
+	  });
+
+});
 	/*
 	console.log("\n\n");
 	console.log("Compression using lzutf8");

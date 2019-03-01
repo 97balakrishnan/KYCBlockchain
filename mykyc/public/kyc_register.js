@@ -92,7 +92,7 @@ function compressLZUTF8() {
 		console.log("Compressed Encrypted length : "+compressedEncrypted.length);
 		console.log("\n\n");
 		
-		contractInstance.addCustomer(obj.name,obj.email,compressedEncrypted,'goldenBank',{from: web3.eth.accounts[0],gas:3000000});
+		contractInstance.addCustomer(obj.name,obj.email,compressedEncrypted,localStorage.getItem('oname'),{from: web3.eth.accounts[0],gas:3000000});
 
 		sendMail(obj.name,obj.email);
 	});
