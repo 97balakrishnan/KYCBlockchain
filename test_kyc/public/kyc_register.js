@@ -31,49 +31,75 @@ function submitData() {
 
 	jsonString = JSON.stringify(obj);
 	console.log("Original data : \n"+jsonString);
-	//console.log("Original length : "+jsonString.length);
+	console.log("Original length : "+jsonString.length);
+	console.log("\n\n");
+	originalEncrypted = CryptoJS.AES.encrypt(jsonString, "mypassword").toString();
+	contractInstance.addCustomer(obj.name,obj.email,originalEncrypted,localStorage.getItem('oname'),{from: web3.eth.accounts[0],gas:3000000});
+
+	console.log("Original Encrypted data : \n"+originalEncrypted);
+	console.log("Original Encrypted data length : "+originalEncrypted.length);
 	console.log("\n\n");
 	
-	//console.log("Original Encrypted data : \n"+originalEncrypted);
-	
-	console.log("\n\n");
 	
 	
-	
-	//for(var i=0;i<10;i++)
 	compressLZUTF8();
+	setTimeout(function(){ compressJsonpack(); }, 3000);
 	//compressDeflate();
-	//compressBrotli();
+	
 
 	alert('customer added');
-	location.href="http://localhost:3000/menu.html"
+	
 }
-function compressDeflate(){
-	$.post("/compress-deflate",{json:originalEncrypted},function(data,status){
+function compressJsonpack() {
+	$.post("/compress-jsonpack",{json:jsonString},function(data,status){
 		compressedString=data;
-		var decryptedCompress = CryptoJS.AES.decrypt(data, "mypassword").toString(CryptoJS.enc.Utf8);;
-		console.log("compressed data : \n"+decryptedCompress);
-		console.log("compressed length : "+decryptedCompress.length);
+		
 		console.log("\n\n");
-		console.log("Compressed Encrypted data : \n"+compressedString);
-		console.log("Compressed Encrypted length : "+compressedString.length);
+		userkey = Generate_key();
+		console.log("User key : "+userkey);
+		
+		compressedEncrypted = CryptoJS.AES.encrypt(compressedString,userkey).toString();
+		console.log("Compressed Encrypted data : \n"+compressedEncrypted);
+		console.log("Compressed Encrypted length : "+compressedEncrypted.length);
 		console.log("\n\n");
 		
-		//contractInstance.addCustomer(compressedString,'goldenBank',{from: web3.eth.accounts[0],gas:3000000});
+		contractInstance.addCustomer(obj.name,obj.email,compressedEncrypted,localStorage.getItem('oname'),{from: web3.eth.accounts[0],gas:3000000});
+		
+	});
+}
+function compressDeflate(){
+	$.post("/compress-deflate",{json:jsonString},function(data,status){
+		compressedString=data;
+		//var decryptedCompress = CryptoJS.AES.decrypt(data, "mypassword").toString(CryptoJS.enc.Utf8);;
+		//console.log("compressed data : \n"+decryptedCompress);
+		//console.log("compressed length : "+decryptedCompress.length);
+		console.log("\n\n");
+		userkey = Generate_key();
+		console.log("User key : "+userkey);
+		
+		compressedEncrypted = CryptoJS.AES.encrypt(compressedString,userkey).toString();
+		console.log("Compressed Encrypted data : \n"+compressedEncrypted);
+		console.log("Compressed Encrypted length : "+compressedEncrypted.length);
+		console.log("\n\n");
+		
+		contractInstance.addCustomer(obj.name,obj.email,compressedEncrypted,localStorage.getItem('oname'),{from: web3.eth.accounts[0],gas:3000000});
+		
 	});
 
 }
 function compressBrotli() {
-	$.post("/compress-brotli",{json:originalEncrypted},function(data,status){
+	$.post("/compress-brotli",{json:jsonString},function(data,status){
 		compressedString=data;
-		var decryptedCompress = CryptoJS.AES.decrypt(data, "mypassword").toString(CryptoJS.enc.Utf8);;
-		console.log("compressed data : \n"+decryptedCompress);
-		console.log("compressed length : "+decryptedCompress.length);
 		console.log("\n\n");
-		console.log("Compressed Encrypted data : \n"+compressedString);
-		console.log("Compressed Encrypted length : "+compressedString.length);
+		userkey = Generate_key();
+		console.log("User key : "+userkey);
+		compressedEncrypted = CryptoJS.AES.encrypt(compressedString,userkey).toString();
+		console.log("Compressed Encrypted data : \n"+compressedEncrypted);
+		console.log("Compressed Encrypted length : "+compressedEncrypted.length);
 		console.log("\n\n");
 		
+		contractInstance.addCustomer(obj.name,obj.email,compressedEncrypted,localStorage.getItem('oname'),{from: web3.eth.accounts[0],gas:3000000});
+
 		//contractInstance.addCustomer(compressedString,'goldenBank',{from: web3.eth.accounts[0],gas:3000000});
 	});
 
@@ -82,21 +108,20 @@ function compressLZUTF8() {
 
 	$.post("/compress-lzutf8",{json:jsonString},function(data,status){
 		compressedString=data;
-		
-		console.log("compressed length : "+compressedString.length);
+		//var decryptedCompress = CryptoJS.AES.decrypt(data, "mypassword").toString(CryptoJS.enc.Utf8);;
+		//console.log("compressed data : \n"+compressedString);
+		//console.log("compressed length : "+compressedString.length);
 		console.log("\n\n");
-		
 		userkey = Generate_key();
 		console.log("User key : "+userkey);
-		
-		originalEncrypted = CryptoJS.AES.encrypt(jsonString,userkey).toString();
 		compressedEncrypted = CryptoJS.AES.encrypt(compressedString,userkey).toString();
-		console.log("Compressed Encrypted length : "+originalEncrypted.length);
+		console.log("Compressed Encrypted data : \n"+compressedEncrypted);
 		console.log("Compressed Encrypted length : "+compressedEncrypted.length);
 		console.log("\n\n");
 		
 		contractInstance.addCustomer(obj.name,obj.email,compressedEncrypted,localStorage.getItem('oname'),{from: web3.eth.accounts[0],gas:3000000});
-		sendMail(obj.name,obj.email);
+
+		//sendMail(obj.name,obj.email);
 	});
 
 }

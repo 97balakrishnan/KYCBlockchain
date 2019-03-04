@@ -15,13 +15,7 @@ contract KycSmartContract {
     constructor() public {
         
     }
-    function getDataSize() public view returns(uint) {
-        uint total = 0;
-        for(uint i=0;i<allCustomers.length;i++) {
-            total = total + allCustomers[i].name.length + allCustomers[i].email.length + allCustomers[i].kycData.length + allCustomers[i].oName.length;
-        }
-        return total;
-    }
+    
     function checkDeployed() public view returns(bool){
         return true;
     }
