@@ -1,10 +1,7 @@
 # KYC Process using Blockchain Technology and WebDev
 
-Uses
 
-Ganache-cli,Web3Js,Remix.ethereum,nodeJS
-
-Implementation stack:
+## Implementation stack:
 
 1. Smart Contract - Ethereum smart contracts in Solidity
 	- Remix GUI used for compiling and deploying the smart contract locally
@@ -19,9 +16,9 @@ Implementation stack:
 
 
 
-First go to the mykyc directory
+The main project directory is  mykyc directory
 
-Execution instructions:
+## Execution instructions:
 
 1. Start the ganache-cli in the following directory
 
