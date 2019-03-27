@@ -1,5 +1,4 @@
-# FYP Final Year Project
-KYC Process using Blockchain Technology and WebDev
+# KYC Process using Blockchain Technology and WebDev
 
 Uses
 
