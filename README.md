@@ -1,5 +1,9 @@
 # KYC Process using Blockchain Technology and WebDev
-
+[![contributors](https://img.shields.io/github/contributors/97balakrishnan/KYCBlockchain.svg)](https://img.shields.io/github/contributors/97balakrishnan/KYCBlockchain.svg)
+[![last-commit](https://img.shields.io/github/last-commit/97balakrishnan/KYCBlockchain.svg)](https://img.shields.io/github/last-commit/97balakrishnan/KYCBlockchain.svg)
+<br>
+[![Open Source Love](https://badges.frapsoft.com/os/v2/open-source-150x25.png?v=103)](https://github.com/ellerbrock/open-source-badges/)
+[![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com)
 
 ## Implementation stack:
 
